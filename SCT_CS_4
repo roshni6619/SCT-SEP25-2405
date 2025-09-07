@@ -1,0 +1,38 @@
+import time
+
+def typing_speed_test():
+    # Sample text
+    sample_text = "The quick brown fox jumps over the lazy dog"
+    print("Typing Speed Test")
+    print("-" * 40)
+    print("Type the following text as fast as you can:\n")
+    print(f"👉 {sample_text}\n")
+    
+    # Wait for user to be ready
+    input("Press Enter when you are ready to start...\n")
+    
+    # Start timing
+    start_time = time.time()
+    typed_text = input("Start typing here:\n")
+    end_time = time.time()
+    
+    # Calculate results
+    elapsed_time = end_time - start_time
+    words_typed = len(typed_text.split())
+    total_words = len(sample_text.split())
+    
+    # Words per minute (WPM)
+    wpm = words_typed / (elapsed_time / 60)
+    
+    # Accuracy
+    correct_chars = sum(1 for a, b in zip(typed_text, sample_text) if a == b)
+    accuracy = (correct_chars / len(sample_text)) * 100
+    
+    print("\n--- Results ---")
+    print(f"Time taken: {elapsed_time:.2f} seconds")
+    print(f"Speed: {wpm:.2f} words per minute")
+    print(f"Accuracy: {accuracy:.2f}%")
+
+# Run the test
+if __name__ == "__main__":
+    typing_speed_test()
