@@ -1,0 +1,45 @@
+from PIL import Image
+import numpy as np
+
+# Encryption function
+def encrypt_image(input_path, output_path, key=50):
+    img = Image.open(input_path)
+    arr = np.array(img)
+
+    # Operation 1: Swap rows (reverse order)
+    arr = arr[::-1]
+
+    # Operation 2: Apply XOR with key on each pixel
+    arr = arr ^ key  
+
+    encrypted_img = Image.fromarray(arr.astype(np.uint8))
+    encrypted_img.save(output_path)
+    print(f"Image encrypted and saved at {output_path}")
+
+
+# Decryption function
+def decrypt_image(input_path, output_path, key=50):
+    img = Image.open(input_path)
+    arr = np.array(img)
+
+    # Reverse XOR
+    arr = arr ^ key  
+
+    # Reverse row swap
+    arr = arr[::-1]
+
+    decrypted_img = Image.fromarray(arr.astype(np.uint8))
+    decrypted_img.save(output_path)
+    print(f"Image decrypted and saved at {output_path}")
+
+if __name__ == "__main__":
+    # Step 1: Create a dummy red image (3x3 pixels)
+    dummy_image_data = np.zeros((3, 3, 3), dtype=np.uint8)
+    dummy_image_data[:, :, 0] = 255  # Red channel
+    dummy_img = Image.fromarray(dummy_image_data, 'RGB')
+    dummy_img.save('input.jpg')
+    print("Created dummy input.jpg for testing.")
+
+    # Step 2: Encrypt + Decrypt
+    encrypt_image("input.jpg", "encrypted.png", key=123)
+    decrypt_image("encrypted.png", "decrypted.png", key=123)
